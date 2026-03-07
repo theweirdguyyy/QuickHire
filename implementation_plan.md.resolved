@@ -1,0 +1,38 @@
+# Admin Polishing & Responsive UI Plan
+
+Address UI issues in the Admin panel and ensure the application is mobile-ready.
+
+## Proposed Changes
+
+### [Component] API Routes (Next.js 16 Async Params Fix)
+#### [MODIFY] [api/categories/[id]/route.ts](file:///e:/HirePro/src/app/api/categories/%5Bid%5D/route.ts)
+- **Await Params**: Change the route handler signature to `await params` to correctly extract the category ID.
+- **Validation**: Ensure [id](file:///e:/HirePro/src/components/providers.tsx#5-8) is present before querying the database.
+
+#### [MODIFY] [api/jobs/[id]/route.ts](file:///e:/HirePro/src/app/api/jobs/%5Bid%5D/route.ts)
+- **Await Params**: Change the route handler signature to `await params` to correctly extract the job ID.
+- **Request Body**: Sanitize the body to remove `_id` if present before passing it to `findByIdAndUpdate`.
+
+### [Component] Admin Dashboard Refinement
+#### [MODIFY] [admin/page.tsx](file:///e:/HirePro/src/app/admin/page.tsx)
+- **Fix Deletion**: Ensure state is updated correctly after job/category deletion by awaiting the API call and re-fetching or filtering the local state. (DONE - verified in previous step, but re-checking logic).
+- **Icon Selector**: (DONE).
+
+### [Component] Navigation
+#### [MODIFY] [Navbar.tsx](file:///e:/HirePro/src/components/layout/Navbar.tsx)
+- **Responsive Design**: Add a `useState` for mobile menu open/close.
+- **Mobile Menu**: Implement a slide-down or overlay menu for screens smaller than [md](file:///C:/Users/soebs/.gemini/antigravity/brain/02be539a-1ae8-457c-bec2-af30921889df/task.md).
+- **Styling**: Ensure all links and buttons use `cursor-pointer`.
+
+## Verification Plan
+
+### Automated Tests (Browser Subagent)
+1. **Admin CRUD**:
+    - Log in with `soebshihab@gmail.com` / `123456789`.
+    - Create a test category using the new **Icon Selector**.
+    - Edit and then **Delete** the category, verifying it disappears from the list immediately.
+    - Repeat for a job listing.
+2. **Responsiveness**:
+    - Resize browser to mobile width.
+    - Verify hamburger icon appears.
+    - Open menu and verify all links (Login, Sign Up/Profile) are visible.
