@@ -9,7 +9,7 @@ import User from "@/models/User";
 export async function GET() {
     try {
         await dbConnect();
-        const jobs = await Job.find({}).sort({ postedAt: -1 }).lean();
+        const jobs = await Job.find({}).sort({ sortOrder: 1, postedAt: -1 }).lean();
         return NextResponse.json({ success: true, data: JSON.parse(JSON.stringify(jobs)) });
     } catch {
         return NextResponse.json({ success: false, error: "Failed to fetch jobs" }, { status: 500 });

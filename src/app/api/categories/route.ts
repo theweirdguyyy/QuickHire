@@ -8,7 +8,7 @@ import User from "@/models/User";
 export async function GET() {
     try {
         await dbConnect();
-        const categories = await Category.find({}).sort({ name: 1 }).lean();
+        const categories = await Category.find({}).sort({ sortOrder: 1, name: 1 }).lean();
         return NextResponse.json({ success: true, data: JSON.parse(JSON.stringify(categories)) });
     } catch (error) {
         return NextResponse.json({ success: false, error: "Failed to fetch categories" }, { status: 500 });

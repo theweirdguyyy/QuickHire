@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export function Hero() {
     const router = useRouter();
     const [keyword, setKeyword] = useState("");
-    const [location, setLocation] = useState("Florence, Italy");
+    const [location, setLocation] = useState("");
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -131,7 +131,7 @@ export function Hero() {
                                 onChange={e => setLocation(e.target.value)}
                                 className="w-full text-base lg:text-lg text-[#293241] bg-transparent outline-none pb-1 lg:pb-2"
                             />
-                            <ChevronDown className="absolute right-0 bottom-1/2 translate-y-1/2 lg:translate-y-0 lg:bottom-[18px] h-5 w-5 text-[#94A3B8]" />
+                            {/* <ChevronDown className="absolute right-0 bottom-1/2 translate-y-1/2 lg:translate-y-0 lg:bottom-[18px] h-5 w-5 text-[#94A3B8]" /> */}
                             <div className="hidden lg:block absolute bottom-4 left-0 right-0 h-[1px] bg-[#E2E8F0]" />
                         </div>
                     </div>

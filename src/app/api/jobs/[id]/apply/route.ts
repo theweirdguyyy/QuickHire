@@ -20,10 +20,17 @@ export async function POST(
         const website = formData.get("website") as string;
         const linkedIn = formData.get("linkedIn") as string;
         const university = formData.get("university") as string;
+        const major = formData.get("major") as string;
+        const githubUrl = formData.get("githubUrl") as string;
         const coverLetter = formData.get("coverLetter") as string;
         const resumeFile = formData.get("resume") as File | null;
 
-        if (!candidateName || !candidateEmail || !phone || !desiredPay || !university || !resumeFile) {
+        console.log("--- New Application Received ---");
+        console.log("Major:", major);
+        console.log("GitHub:", githubUrl);
+        console.log("--------------------------------");
+
+        if (!candidateName || !candidateEmail || !phone || !desiredPay || !university || !major || !resumeFile) {
             return NextResponse.json({ success: false, error: "Missing required fields or resume file" }, { status: 400 });
         }
 
@@ -64,6 +71,8 @@ export async function POST(
             website,
             linkedIn,
             university,
+            major,
+            githubUrl,
             coverLetter
         });
 

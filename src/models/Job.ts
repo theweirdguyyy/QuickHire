@@ -11,6 +11,7 @@ export interface IJob extends mongoose.Document {
     logoUrl?: string;
     featured: boolean;
     postedAt: Date;
+    sortOrder: number;
 }
 
 const JobSchema = new mongoose.Schema({
@@ -29,6 +30,7 @@ const JobSchema = new mongoose.Schema({
     logoUrl: { type: String },
     featured: { type: Boolean, default: false },
     postedAt: { type: Date, default: Date.now },
+    sortOrder: { type: Number, default: 0 },
 });
 
 export default mongoose.models.Job || mongoose.model<IJob>('Job', JobSchema);

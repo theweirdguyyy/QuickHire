@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Ubuntu, Geist } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { Providers } from "@/components/providers";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const ubuntu = Ubuntu({
   weight: ["300", "400", "500", "700"],
@@ -30,11 +28,7 @@ export default function RootLayout({
         className={`${ubuntu.variable} font-ubuntu antialiased`}
       >
         <Providers>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          {children}
         </Providers>
       </body>
     </html>

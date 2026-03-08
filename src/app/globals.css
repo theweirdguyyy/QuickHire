@@ -30,8 +30,8 @@
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar: oklch(18.338% 0.00163 16.6);
+  --sidebar-foreground: oklch(23.298% 0.00308 16.905);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -131,10 +131,58 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
+}
+
+/* Global Pointer Cursor for all interactive elements */
+button,
+a,
+select,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
+  cursor: pointer !important;
+}
+
+/* ── Admin Panel: Scoped overrides ────────────────────────────────────────────
+   All rules below ONLY apply inside [data-admin="true"].
+   User-facing pages are completely unaffected.
+   ──────────────────────────────────────────────────────────────────────────── */
+[data-admin="true"] {
+  --border: rgba(255, 255, 255, 0.06);
+  --input: #1a1a1a;
+  --ring: #3b82f6;
+}
+
+/* Table row divider lines — subtle single-pixel separator matching reference */
+[data-admin="true"] table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-admin="true"] table tr:last-child {
+  border-bottom: none;
+}
+
+/* Table header — slightly more visible separator above rows */
+[data-admin="true"] thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Sidebar logo divider */
+[data-admin="true"] [data-slot="sidebar-header"] {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Dark color scheme for native inputs */
+[data-admin="true"] input,
+[data-admin="true"] textarea,
+[data-admin="true"] select {
+  color-scheme: dark;
 }

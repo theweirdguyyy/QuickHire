@@ -24,8 +24,10 @@ export default function ApplyPage({ params }: { params: Promise<{ id: string }> 
         phone: "",
         desiredPay: "",
         website: "",
+        githubUrl: "",
         linkedIn: "",
         university: "",
+        major: "",
         coverLetter: "",
     });
     const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -238,13 +240,13 @@ export default function ApplyPage({ params }: { params: Promise<{ id: string }> 
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label htmlFor="linkedIn" className="text-sm font-semibold text-slate-700">LinkedIn URL</label>
+                                <label htmlFor="githubUrl" className="text-sm font-semibold text-slate-700">GitHub URL</label>
                                 <Input
-                                    id="linkedIn"
-                                    name="linkedIn"
+                                    id="githubUrl"
+                                    name="githubUrl"
                                     type="url"
-                                    placeholder="https://linkedin.com/in/username"
-                                    value={formData.linkedIn}
+                                    placeholder="https://github.com/username"
+                                    value={formData.githubUrl}
                                     onChange={handleChange}
                                     className="h-11 bg-slate-50"
                                 />
@@ -252,30 +254,70 @@ export default function ApplyPage({ params }: { params: Promise<{ id: string }> 
                         </div>
 
                         <div className="space-y-2">
-                            <label htmlFor="university" className="text-sm font-semibold text-slate-700">College / University <span className="text-red-500">*</span></label>
+                            <label htmlFor="linkedIn" className="text-sm font-semibold text-slate-700">LinkedIn URL</label>
                             <Input
-                                id="university"
-                                name="university"
-                                required
-                                placeholder="University of Technology"
-                                value={formData.university}
+                                id="linkedIn"
+                                name="linkedIn"
+                                type="url"
+                                placeholder="https://linkedin.com/in/username"
+                                value={formData.linkedIn}
                                 onChange={handleChange}
                                 className="h-11 bg-slate-50"
                             />
                         </div>
 
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label htmlFor="university" className="text-sm font-semibold text-slate-700">College / University <span className="text-red-500">*</span></label>
+                                <Input
+                                    id="university"
+                                    name="university"
+                                    required
+                                    placeholder="University of Technology"
+                                    value={formData.university}
+                                    onChange={handleChange}
+                                    className="h-11 bg-slate-50"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label htmlFor="major" className="text-sm font-semibold text-slate-700">Department / Major <span className="text-red-500">*</span></label>
+                                <Input
+                                    id="major"
+                                    name="major"
+                                    required
+                                    placeholder="Computer Science"
+                                    value={formData.major}
+                                    onChange={handleChange}
+                                    className="h-11 bg-slate-50"
+                                />
+                            </div>
+                        </div>
+
                         <div className="space-y-2">
-                            <label htmlFor="resume" className="text-sm font-semibold text-slate-700">Resume / CV (PDF) <span className="text-red-500">*</span></label>
-                            <Input
-                                id="resume"
-                                name="resume"
-                                type="file"
-                                accept="application/pdf"
-                                required
-                                onChange={(e) => setResumeFile(e.target.files?.[0] || null)}
-                                className="h-11 bg-slate-50 cursor-pointer text-slate-600 file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 p-1.5"
-                            />
-                            <p className="text-xs text-slate-500">Only PDF files are accepted.</p>
+                            <label className="text-sm font-semibold text-slate-700">Resume / CV (PDF) <span className="text-red-500">*</span></label>
+                            <label
+                                htmlFor="resume"
+                                className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50/10 hover:bg-slate-50 hover:border-blue-400 transition-all cursor-pointer group"
+                            >
+                                <input
+                                    id="resume"
+                                    name="resume"
+                                    type="file"
+                                    accept="application/pdf"
+                                    required
+                                    onChange={(e) => setResumeFile(e.target.files?.[0] || null)}
+                                    className="hidden"
+                                />
+                                <div className="text-center">
+                                    <div className="bg-blue-100 text-blue-600 p-4 rounded-full w-fit mx-auto mb-4 group-hover:scale-110 transition-transform shadow-sm">
+                                        <Briefcase className="h-8 w-8" />
+                                    </div>
+                                    <p className="text-base font-bold text-slate-700 mb-1">
+                                        {resumeFile ? resumeFile.name : "Click to upload or drag and drop"}
+                                    </p>
+                                    <p className="text-xs text-slate-500">Only PDF files are accepted.</p>
+                                </div>
+                            </label>
                         </div>
 
                         <div className="space-y-2">
