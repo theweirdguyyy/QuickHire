@@ -6,6 +6,8 @@ export interface IUser extends mongoose.Document {
     password?: string;
     image?: string;
     role: 'applicant' | 'employer' | 'admin';
+    isVerified: boolean;
+    verificationCode?: string;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -14,6 +16,8 @@ const UserSchema = new mongoose.Schema({
     password: { type: String },
     image: { type: String },
     role: { type: String, enum: ['applicant', 'employer', 'admin'], default: 'applicant' },
+    isVerified: { type: Boolean, default: false },
+    verificationCode: { type: String },
 });
 
 export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema);

@@ -91,7 +91,11 @@ export function Navbar() {
                     </div>
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden p-2 text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+                        className={`md:hidden p-2.5 rounded-xl transition-all duration-300 cursor-pointer shadow-sm
+                            ${isMenuOpen
+                                ? "bg-red-50 text-red-500 hover:bg-red-100"
+                                : "bg-blue-50 text-blue-600 hover:bg-blue-100"
+                            }`}
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

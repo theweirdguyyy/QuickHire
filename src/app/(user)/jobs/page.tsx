@@ -158,8 +158,8 @@ function JobsContent() {
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 flex-wrap mb-1">
-                                                <Link href={`/jobs/${job._id}`} className="hover:underline hover:text-blue-600 transition-colors">
-                                                    <h2 className="text-lg font-semibold text-slate-900">{job.title}</h2>
+                                                <Link href={`/jobs/${job._id}`} className="group">
+                                                    <h2 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 group-hover:underline transition-all">{job.title}</h2>
                                                 </Link>
                                                 {job.featured && <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 text-xs">Featured</Badge>}
                                             </div>
@@ -170,7 +170,16 @@ function JobsContent() {
                                                 {job.salaryRange && <span className="flex items-center gap-1.5"><DollarSign className="h-3.5 w-3.5" />{job.salaryRange}</span>}
                                                 <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" />{timeAgo(job.postedAt)}</span>
                                             </div>
-                                            {job.description && <p className="mt-3 text-sm text-slate-600 line-clamp-2">{job.description}</p>}
+                                            {job.description && (
+                                                <div className="mt-3">
+                                                    <p className="text-sm text-slate-600 line-clamp-2">{job.description}</p>
+                                                    {job.description.length > 150 && (
+                                                        <Link href={`/jobs/${job._id}`} className="text-blue-600 text-xs font-semibold hover:underline mt-1 inline-block">
+                                                            See more
+                                                        </Link>
+                                                    )}
+                                                </div>
+                                            )}
                                             {job.categories?.length > 0 && (
                                                 <div className="flex gap-1.5 mt-3 flex-wrap">
                                                     {job.categories.map(c => (

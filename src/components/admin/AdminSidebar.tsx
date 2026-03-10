@@ -13,11 +13,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Briefcase, FileText, Tags, Settings } from "lucide-react";
+import { LayoutDashboard, Briefcase, FileText, Tags, Settings, Building2 } from "lucide-react";
 
 const navItems = [
     { title: "Overview", url: "/admin", icon: LayoutDashboard },
     { title: "Manage Jobs", url: "/admin/jobs", icon: Briefcase },
+    { title: "Companies", url: "/admin/companies", icon: Building2 },
     { title: "Applications", url: "/admin/applications", icon: FileText },
     { title: "Categories", url: "/admin/categories", icon: Tags },
     { title: "Settings", url: "/admin/settings", icon: Settings },

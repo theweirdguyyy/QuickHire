@@ -13,11 +13,45 @@ export default function SignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [code, setCode] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [sendingCode, setSendingCode] = useState(false);
+    const [codeSent, setCodeSent] = useState(false);
+
+    const handleSendCode = async () => {
+        if (!email) {
+            setError("Please enter your email first");
+            return;
+        }
+        setSendingCode(true);
+        setError("");
+        try {
+            const res = await fetch("/api/auth/send-code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email }),
+            });
+            const data = await res.json();
+            if (data.success) {
+                setCodeSent(true);
+                alert("Code sent! Check console for mock code.");
+            } else {
+                setError(data.message);
+            }
+        } catch {
+            setError("Failed to send code");
+        } finally {
+            setSendingCode(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!codeSent) {
+            setError("Please verify your email first");
+            return;
+        }
         setLoading(true);
         setError("");
 
@@ -26,7 +60,7 @@ export default function SignupPage() {
             const res = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, password }),
+                body: JSON.stringify({ name, email, password, code }),
             });
 
             const data = await res.json();
@@ -83,20 +117,48 @@ export default function SignupPage() {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
-                                className="h-11"
+                                className="h-11 border-slate-200 focus:ring-blue-500"
                             />
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
-                            <Input
-                                type="email"
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className="h-11"
-                            />
+                        <div className="space-y-1.5">
+                            <label className="block text-sm font-medium text-slate-700">Email address</label>
+                            <div className="flex gap-2">
+                                <Input
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    className="h-11 flex-1 border-slate-200"
+                                />
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={handleSendCode}
+                                    disabled={sendingCode || !email}
+                                    className="h-11 px-4 text-blue-600 border-blue-200 hover:bg-blue-50"
+                                >
+                                    {sendingCode ? "..." : codeSent ? "Resend" : "Send Code"}
+                                </Button>
+                            </div>
                         </div>
+
+                        {codeSent && (
+                            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                                <label className="block text-sm font-medium text-slate-700 mb-1.5">Verification Code</label>
+                                <Input
+                                    type="text"
+                                    placeholder="Enter 6-digit code"
+                                    value={code}
+                                    onChange={(e) => setCode(e.target.value)}
+                                    required
+                                    maxLength={6}
+                                    className="h-11 border-blue-200 focus:ring-blue-500 bg-blue-50/30"
+                                />
+                                <p className="mt-1.5 text-[11px] text-blue-500">Check the console (Press F12) to find your verification code.</p>
+                            </div>
+                        )}
+
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
                             <Input
@@ -106,15 +168,15 @@ export default function SignupPage() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                                 minLength={8}
-                                className="h-11"
+                                className="h-11 border-slate-200"
                             />
                         </div>
                         <Button
                             type="submit"
-                            className="w-full bg-blue-600 hover:bg-blue-700 h-11 text-base font-medium"
-                            disabled={loading}
+                            className="w-full bg-blue-600 hover:bg-blue-700 h-12 text-base font-bold shadow-lg shadow-blue-500/20"
+                            disabled={loading || !codeSent}
                         >
-                            {loading ? "Creating account..." : "Create account"}
+                            {loading ? "Creating account..." : "Verify & Create Account"}
                         </Button>
                     </form>
 
